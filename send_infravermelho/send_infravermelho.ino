@@ -22,6 +22,7 @@ void loop() {
     Serial.println(valor, HEX);
     tipo = res.decode_type;
     Serial.println(tipo);
+    delay(100);
   } else if(digitalRead(bt2) == 1) { // RIGHT
     valor = 0xFF22DD;
   }
