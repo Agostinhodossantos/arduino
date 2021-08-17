@@ -11,6 +11,6 @@ void loop() {
   tone(som, 500, 100);
  delay(100);
  delay(100);
-
+ 
  delay(5000);
 }
