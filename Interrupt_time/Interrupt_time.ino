@@ -19,11 +19,19 @@ void loop() {
 }
 
 void alarme() {
-  digitalWrite(led_alarme, !digitalRead(led_alarme));
+  digitalWrite(led_alarme, !digitalRead(led_alarme_pino));
 }
+
 
 void toogle_alarme() {
   if (armado){
-    
+    digitalWrite(led_armado_pino, LOW);
+    alarme = false;
+    // Remover Int
+    digitalWrite(led_alarme, LOW);
+  } else {
+    digitalWrite(led_armado_pino,HIGH);
+    alarme = true;
+    Timer1.initialize(alarme);
   }
 }
