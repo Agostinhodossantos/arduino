@@ -40,3 +40,33 @@ void loop() {
     peakCounter = 0;
   }
 }
+
+void toggleLights() {
+  statePin = !statePin;
+  digitalWrite(LED_PIN, statePin);
+}
+
+unsigned int getNoiseLevel() {
+  unsigned long startMillis = millis();
+  unsigned int peakToPeak = 0;
+  unsigned int signalMax = 0;
+  unsigned int signalMin = 1024;
+  unsigned int sample;
+
+  while (millis() - startMillis < sampleWindow) {
+    sample = analogRead(MIC_PIN);
+    if (sample < 1024) {
+      if (sample > signalMax) { // save just the max levels
+        signalMax = sample;
+      } else if (sample < signalMin) { // save just the min levels
+        signalMin = sample;
+      }
+    }
+  }
+  
+  peakToPeak = signalMax - signalMin;  // max - min = peak-peak amplitude
+
+  double noise = (peakToPeak * 3.3) / 1024;  // convert to volts
+
+  return peakToPeak;
+}
